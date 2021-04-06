@@ -40,7 +40,6 @@ public class NoticeController {
 	@GetMapping("/read")
 	public void getOne(@ModelAttribute("nno") Integer nno, PageDTO pageDTO, Model model) {
 		
-		model.addAttribute("files", service.getFile(nno));
 		model.addAttribute("notice", service.getOne(nno));		
 	}
 	
@@ -64,7 +63,7 @@ public class NoticeController {
 	}
 	
 	@GetMapping("/modify")
-	public void getModify(Integer nno, Model model) {
+	public void getModify(@ModelAttribute("nno")Integer nno, Model model) {
 
 		model.addAttribute("files", service.getFile(nno));
 		model.addAttribute("notice", service.getOne(nno));

@@ -49,16 +49,6 @@
                      </div>
                      <div class="row">
                      <ul class="fileUl">
-                     <c:forEach items="${files }" var="file">
-                     ${file}
-                     ${file.uploadPath}
-                        <c:if test="${!file.image}">
-                     <li id="li${file.uuid }"><i class='fas fa-file'></i>${file.fileName}<button onclick="delTempImg(event, {'uploadPath':'${file.uploadPath}', 'uuid':'${file.uuid }', 'fileName':'${file.fileName}', 'image':'${file.image}', 'nno':'${file.nno }'})">삭제</button></li>
-                  </c:if>
-                  <c:if test="${file.image }">
-                        <li id="li${file.uuid }"><img src='/admin/common/notice/view?link=${file.thumbLink}'/><button onclick="delTempImg(event, {'uploadPath':'${file.uploadPath}', 'uuid':'${file.uuid }', 'fileName':'${file.fileName}', 'image':'${file.image}', 'nno':'${file.nno }'})">삭제</button></li>
-                        </c:if>
-                     </c:forEach>
                      </ul>
                       </div>
                        <div class="btnContainer">
@@ -233,22 +223,57 @@
        fileUl.querySelector("#li"+param.uuid).remove();
 
    } 
-   
+
 
    
-/*    const fileDelBtn = document.querySelector(".fileDelBtn")
+service.getFiles(${nno}).then(res => res.json()).then(files => {
+	  
+	
+	
+	   var str = ""
+	   
+	   for(const file of files){
+		   
+		   arr.push(file)
+		   
+		   if(file.image){
+			   str += "<li id='li"+file.uuid+"'>"+file.fileName+"<img src = '/admin/common/notice/view?link="+file.thumbLink+"'/><button onclick='deleteImg(event,"+JSON.stringify(file)+")'>삭제</button></li>"
+		   }else{
+			   str +="<li  id='li"+file.uuid+"'><i class='fas fa-file'></i>"+file.fileName+"<button onclick='deleteImg(event,"+JSON.stringify(file)+")'>삭제</button></li>"
+		   }
+		   
+	   }
+	   
+	   fileUl.innerHTML += str
+})
+
+
    
-   fileDelBtn.addEventListener("click", function(e){
-      
-      e.preventDefault();
-      
-   },false) */
-   
-   
-   fileUl.addEventListener("click", function(){
-        
-      
-   },false)
+function deleteImg(param,file){
+	
+	param.preventDefault()
+	
+	const list = fileUl.querySelectorAll("li")
+    
+    console.log(list)
+	/* function findUuid(element){
+		if(element ==="li#li26f3dcee-d938-49ed-a90f-6a37e51c0369")
+	}
+	 */
+	
+	console.log(arr)
+	
+	service.fileDelete(file)
+	
+	document.querySelector("#li"+file.uuid).remove()
+	
+    
+    
+   /*  for(var i=0; i<list.length; i++){
+    	list[i].onclick
+    } */
+	
+}
    
    
 </script>
