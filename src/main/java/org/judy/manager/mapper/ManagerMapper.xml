@@ -102,6 +102,11 @@
 	</update>
 	
 
+	 <insert id="insertAuth" >
+	   <![CDATA[
+	   insert into tbl_auth (mid, auth) values (#{mid}, 'ROLE_MANAGER');
+	   ]]>
+	 </insert>
 	
 	
 </mapper>
